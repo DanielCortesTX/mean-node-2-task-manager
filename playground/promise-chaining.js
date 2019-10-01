@@ -10,7 +10,9 @@ const User = require('../src/models/user')
 //      console.log(e)
 // })
 
+// const updateAgeAndCount = async () => {
 
+// }
 
 // const add = (a,b) => {
 //   return new Promise((resolve, reject) => {
