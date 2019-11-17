@@ -48,7 +48,7 @@ router.post('/users/logout', auth, async (req, res) => {
 
 // logout of all sessions
 
-router.post('/users/logoutall', auth, async (req, res) => {
+router.post('/users/logoutAll', auth, async (req, res) => {
   try {
     req.user.tokens = []
     await req.user.save()
