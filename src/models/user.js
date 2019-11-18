@@ -49,14 +49,13 @@ const userSchema = new mongoose.Schema({
   }]
 })
 
-userSchema.methods.generateAuthToken = async function () {
-  const user = this
-  const token = jwt.sign({ _id: user._id.toString()}, 'thisisthenewcorse')
-
-  user.tokens = user.tokens.concat({ token })
-  await user.save()
-  return token
-}
+//virtual property. relationship between entities
+// not stored on database. a reference for mongoose
+userSchema.virtual('tasks', {
+  ref: 'Task',
+  localField: '_id',
+  foreignField: 'owner'
+})
 
 // only return public info
 userSchema.methods.toJSON = function (){
@@ -67,6 +66,15 @@ userSchema.methods.toJSON = function (){
   delete userObject.tokens
 
   return userObject
+}
+
+userSchema.methods.generateAuthToken = async function () {
+  const user = this
+  const token = jwt.sign({ _id: user._id.toString()}, 'thisisthenewcorse')
+
+  user.tokens = user.tokens.concat({ token })
+  await user.save()
+  return token
 }
 
 userSchema.statics.findByCredentials = async (email, password) => {

@@ -1,7 +1,6 @@
 const express = require('express')
 require('./db/mongoose')
 const User = require('./models/user')
-const Task = require('./models/task')
 const userRouter = require('./router/user')
 const taskRouter = require('./router/task')
 
@@ -26,12 +25,17 @@ app.listen(port, () => {
   console.log(`Server is up on port ${port}`)
 })
 
-const pet = {
-  name: 'Hal'
-}
+const Task = require('./models/task')
 
-pet.toJSON = function () {
-  return {}
-}
+const main = async () => {
+  // const task = await Task.findById('5dd1eb707a3aba09303a98a1')
+  // // get entire owner from the task they made
+  // await task.populate('owner').execPopulate()
+  // console.log(task)
 
-console.log(JSON.stringify(pet))
+  const user = await User.findById('5dd1ea7966cdb746a4dcdc6d')
+  await user.populate('tasks').execPopulate()
+  console.log(user.tasks)
+}
+ 
+main()
