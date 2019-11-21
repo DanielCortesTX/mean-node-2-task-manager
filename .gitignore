@@ -1,2 +1,3 @@
 node_modules/
 /config/keys_dev.js
+/src/emails/account.js
